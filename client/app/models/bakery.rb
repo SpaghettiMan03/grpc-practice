@@ -52,7 +52,7 @@ class Bakery
 
   # パンケーキを焼きます
   def self.bake_pancake(menu)
-    req = Pancake::Maker::BakeRequest.new({
+    req = Pancake::Baker::BakeRequest.new({
                                               menu: pb_menu(menu),
                                           })
 
@@ -69,7 +69,7 @@ class Bakery
 
   # レポートを書きます
   def self.report
-    res = stub.report(Pancake::Maker::ReportRequest.new())
+    res = stub.report(Pancake::Baker::ReportRequest.new())
 
     res.report.bake_counts.map {|r| [r.menu, r.count]}.to_h
   end
@@ -79,7 +79,7 @@ class Bakery
   end
 
   def self.stub
-    Pancake::Maker::PancakeBakerService::Stub.new(
+    Pancake::Baker::PancakeBakerService::Stub.new(
         config_dsn,
         :this_channel_is_insecure,
         timeout: 10,

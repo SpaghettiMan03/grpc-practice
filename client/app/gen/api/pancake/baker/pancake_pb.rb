@@ -6,13 +6,13 @@ require 'google/protobuf'
 require 'google/protobuf/timestamp_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("pancake.proto", :syntax => :proto3) do
-    add_message "pancake.maker.Pancake" do
+    add_message "pancake.baker.Pancake" do
       optional :chef_name, :string, 1
-      optional :menu, :enum, 2, "pancake.maker.Pancake.Menu"
+      optional :menu, :enum, 2, "pancake.baker.Pancake.Menu"
       optional :technical_score, :float, 3
       optional :create_time, :message, 15, "google.protobuf.Timestamp"
     end
-    add_enum "pancake.maker.Pancake.Menu" do
+    add_enum "pancake.baker.Pancake.Menu" do
       value :UNKNOWN, 0
       value :CLASSIC, 1
       value :BANANA_AND_WHIP, 2
@@ -21,36 +21,36 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :BAKED_MARSHMALLOW, 5
       value :SPICY_CURRY, 6
     end
-    add_message "pancake.maker.Report" do
-      repeated :bake_counts, :message, 3, "pancake.maker.Report.BakeCount"
+    add_message "pancake.baker.Report" do
+      repeated :bake_counts, :message, 3, "pancake.baker.Report.BakeCount"
     end
-    add_message "pancake.maker.Report.BakeCount" do
-      optional :menu, :enum, 1, "pancake.maker.Pancake.Menu"
+    add_message "pancake.baker.Report.BakeCount" do
+      optional :menu, :enum, 1, "pancake.baker.Pancake.Menu"
       optional :count, :int32, 2
     end
-    add_message "pancake.maker.BakeRequest" do
-      optional :menu, :enum, 1, "pancake.maker.Pancake.Menu"
+    add_message "pancake.baker.BakeRequest" do
+      optional :menu, :enum, 1, "pancake.baker.Pancake.Menu"
     end
-    add_message "pancake.maker.BakeResponse" do
-      optional :pancake, :message, 1, "pancake.maker.Pancake"
+    add_message "pancake.baker.BakeResponse" do
+      optional :pancake, :message, 1, "pancake.baker.Pancake"
     end
-    add_message "pancake.maker.ReportRequest" do
+    add_message "pancake.baker.ReportRequest" do
     end
-    add_message "pancake.maker.ReportResponse" do
-      optional :report, :message, 1, "pancake.maker.Report"
+    add_message "pancake.baker.ReportResponse" do
+      optional :report, :message, 1, "pancake.baker.Report"
     end
   end
 end
 
 module Pancake
-  module Maker
-    Pancake = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.maker.Pancake").msgclass
-    Pancake::Menu = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.maker.Pancake.Menu").enummodule
-    Report = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.maker.Report").msgclass
-    Report::BakeCount = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.maker.Report.BakeCount").msgclass
-    BakeRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.maker.BakeRequest").msgclass
-    BakeResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.maker.BakeResponse").msgclass
-    ReportRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.maker.ReportRequest").msgclass
-    ReportResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.maker.ReportResponse").msgclass
+  module Baker
+    Pancake = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.baker.Pancake").msgclass
+    Pancake::Menu = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.baker.Pancake.Menu").enummodule
+    Report = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.baker.Report").msgclass
+    Report::BakeCount = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.baker.Report.BakeCount").msgclass
+    BakeRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.baker.BakeRequest").msgclass
+    BakeResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.baker.BakeResponse").msgclass
+    ReportRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.baker.ReportRequest").msgclass
+    ReportResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("pancake.baker.ReportResponse").msgclass
   end
 end

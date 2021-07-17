@@ -6,7 +6,7 @@ gogen:
 # protoファイルからrubyコードの自動生成
 .PHONY: rubygen
 rubygen:
-	cd ./client && bundle exec grpc_tools_ruby_protoc -I ../proto --ruby_out=../gen/api/pancake/maker --grpc_out=../gen/api/pancake/maker ../proto/pancake.proto
+	cd ./client && bundle exec grpc_tools_ruby_protoc -I ../proto --ruby_out=app/gen/api/pancake/baker --grpc_out=app/gen/api/pancake/baker ../proto/pancake.proto
 
 
 # gofmtの実行
