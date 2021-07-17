@@ -8,6 +8,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"time"
 
 	"google.golang.org/grpc/reflection"
 
@@ -21,7 +22,10 @@ func main() {
 		log.Fatalf("failed to listen:%v", err)
 	}
 
-	server := grpc.NewServer()
+	server := grpc.NewServer(
+		grpc.MaxRecvMsgSize(8*1024*1024),
+		grpc.ConnectionTimeout(1*time.Minute),
+	)
 
 	api.RegisterImageUploadServiceServer(
 		server,

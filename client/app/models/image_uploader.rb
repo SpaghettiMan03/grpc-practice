@@ -52,6 +52,9 @@ class ImageUploader
         config_dsn,
         :this_channel_is_insecure,
         timeout: 1,
+        channel_args: {
+            'grpc.max_send_message_length' => -1,
+        },
         )
   end
 end
