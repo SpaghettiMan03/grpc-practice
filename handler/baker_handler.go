@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 	"grpc-practice/gen/api"
 	"math/rand"
 	"sync"
@@ -47,6 +48,8 @@ func (h *BakerHandler) Bake(
 	h.report.Lock()
 	h.report.data[req.Menu] = h.report.data[req.Menu] + 1
 	h.report.Unlock()
+
+	fmt.Printf("パンケーキを%sのためにやいてやったで！", ctx.Value("UserName"))
 
 	return &api.BakeResponse{
 		Pancake: &api.Pancake{

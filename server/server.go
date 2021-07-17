@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"grpc-practice/gen/api"
 	"grpc-practice/handler"
@@ -8,6 +9,12 @@ import (
 	"net"
 	"os"
 	"os/signal"
+
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
 
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 
@@ -32,7 +39,10 @@ func main() {
 
 	server := grpc.NewServer(
 		grpc.UnaryInterceptor(
-			grpc_zap.UnaryServerInterceptor(logger),
+			grpc_middleware.ChainUnaryServer(
+				grpc_zap.UnaryServerInterceptor(logger),
+				grpc_auth.UnaryServerInterceptor(auth),
+			),
 		),
 	)
 	api.RegisterPancakeBakerServiceServer(
@@ -51,4 +61,17 @@ func main() {
 	<-quit
 	log.Println("stopping gRPC server")
 	server.GracefulStop()
+}
+
+func auth(ctx context.Context) (context.Context, error) {
+	token, err := grpc_auth.AuthFromMD(ctx, "bearer")
+	if err != nil {
+		return nil, err
+	}
+
+	if token != "hi/mi/tsu" {
+		return nil, status.Error(codes.Unauthenticated, "無効なトークンです")
+	}
+
+	return context.WithValue(ctx, "UserName", "God"), nil
 }
