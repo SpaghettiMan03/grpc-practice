@@ -49,7 +49,7 @@ func (h *BakerHandler) Bake(
 	h.report.data[req.Menu] = h.report.data[req.Menu] + 1
 	h.report.Unlock()
 
-	fmt.Printf("パンケーキを%sのためにやいてやったで！", ctx.Value("UserName"))
+	fmt.Printf("パンケーキを焼きました！")
 
 	return &api.BakeResponse{
 		Pancake: &api.Pancake{
