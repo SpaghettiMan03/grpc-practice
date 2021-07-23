@@ -1,0 +1,8 @@
+version: '3'
+services:
+  envoy:
+    build:
+      context: ./proxy
+    container_name: envoy-grpc-practice
+    ports:
+      - 9000:9000
