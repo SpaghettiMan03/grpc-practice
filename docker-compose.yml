@@ -5,4 +5,4 @@ services:
       context: ./proxy
     container_name: envoy-grpc-practice
     ports:
-      - 9000:9000
+      - 8080:8080
